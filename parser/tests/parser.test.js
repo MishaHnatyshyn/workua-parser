@@ -9,8 +9,8 @@ const {
 } = require('../parser');
 const fs = require('fs');
 
-const htmlPageMock = fs.readFileSync('./test/resume-list-first-page.html', 'utf8');
-const htmlResumePageMock = fs.readFileSync('./test/resume-page.html', 'utf8');
+const htmlPageMock = fs.readFileSync('parser/test/mocks/resume-list-first-page.html', 'utf8');
+const htmlResumePageMock = fs.readFileSync('parser/test/mocks/resume-page.html', 'utf8');
 const resumeLinksMock = [
   'https://www.work.ua/resumes/5491825/',
   'https://www.work.ua/resumes/478353/',
