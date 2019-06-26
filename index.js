@@ -1,3 +1,3 @@
-const { parse: parser } = require('./parser');
+const { parse: parser } = require('./parser/parser');
 
 parser();
