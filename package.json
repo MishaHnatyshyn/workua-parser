@@ -1,0 +1,39 @@
+{
+  "name": "workua-parser",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --env=node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MishaHnatyshyn/workua-parser.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MishaHnatyshyn/workua-parser/issues"
+  },
+  "homepage": "https://github.com/MishaHnatyshyn/workua-parser#readme",
+  "devDependencies": {
+    "eslint": "^6.0.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-jest": "^22.7.1",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
+    "husky": "^2.4.1",
+    "jest": "^24.8.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test"
+    }
+  },
+  "dependencies": {
+    "jsdom": "^15.1.1",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4"
+  }
+}

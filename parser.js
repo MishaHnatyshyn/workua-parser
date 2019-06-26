@@ -1,6 +1,6 @@
 const jsdom = require('jsdom');
 const request = require('./request-promise');
-const { createPersonalDataTable } = require('./parserUtils');
+const { createPersonalDataTable, prettifyResumeData } = require('./parserUtils');
 
 const { JSDOM } = jsdom;
 
@@ -45,6 +45,7 @@ const parseResumeInfoBlock = (start) => {
 };
 
 const parseCommonData = (dom) => {
+  const photo = dom.window.document.querySelector('img.border');
   const fullName = dom.window.document.querySelector('h1').textContent
     .trim()
     .replace(/\s+/g, ' ');
@@ -58,11 +59,15 @@ const parseCommonData = (dom) => {
     .filter(item => item.trim())
     .map(item => item.trim());
   return {
+    photo: {
+      url: `https://www.work.ua${photo.src}`,
+      alt: photo.alt
+    },
     fullName,
     salary,
     position,
     availability,
-    personal,
+    personal: createPersonalDataTable(personal),
   };
 };
 
@@ -74,19 +79,16 @@ const parseResumeData = (dom) => {
     title: part.innerHTML,
     data: parseResumeInfoBlock(part)
   }));
-  return resumeData;
+  return prettifyResumeData(resumeData);
 };
 
 const parseResumePage = (dom) => {
-  const { document } = dom.window;
-  const common = parseCommonData(document);
-  document.querySelector('.card .row').remove();
-  document.querySelector('#contactInfo').remove();
-  const resumeDataTitlesElements = [...document.querySelectorAll('h2:not([class])')];
-  const resumeData = resumeDataTitlesElements.map(part => ({
-    title: part.innerText,
-    data: parseResumeInfoBlock(part)
-  }));
+  const common = parseCommonData(dom);
+  const resumeData = parseResumeData(dom);
+  return {
+    ...common,
+    ...resumeData.reduce((acc, curr) => ({ ...acc, ...curr }), {})
+  };
 };
 
 
@@ -98,5 +100,6 @@ module.exports = {
   getPage,
   createPersonalDataTable,
   parseCommonData,
-  parseResumeData
+  parseResumeData,
+  parseResumePage
 };

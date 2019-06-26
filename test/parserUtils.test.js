@@ -1,6 +1,8 @@
 const {
   createPersonalDataTable,
   prettifyExperienceSection,
+  prettifyEducationSection,
+  prettifyCommon,
 } = require('../parserUtils');
 
 const personalDataTableArrayMock = [
@@ -20,28 +22,8 @@ const personalDataTableFormattedResultMock = {
 
 const experienceInputData = [
   'TITLE:Co-founder',
-  `з 08.2018 по нині
-   (10 місяців)`,
-  'Bowl Bar Odessa, Одесса (ресторанный бизнес)',
-  `-открытие кафе здорового питания
--разработка меню
--разработка стратегии продвижения компании в соц. сетях
--ведение соц.сетей
--привлечение новых клиентов через соц.сети
--налаживание новых каналов сбыта
--работа со СМИ`, 'TITLE:SMM-manager',
-  `з 08.2018 по нині 
-  (10 місяців)`,
-  'Bowl Bar Odessa, Одесса (ресторанный бизнес)', `- создание Tone of voice бренда;
-- Pre-production (креатив, идеи, референсы) и post-production (обработка материалов — фотошопы, создание анимаций, витрин, видеоредакторы);
-- контент - план и четкое ему следование;
-- коммуникация с аудиторией – вовлечение, конкурсные механики и другие активации;
-- Influence-маркетинг, работа с лидерами мнений;
-- создание вебсайта на платформе Wordpress;
-- настройка рекламных компаний Facebook Adwords;
-- отслеживание результатов РК;
-- ретаргетинг;
-- создание рекламных материалов ( флаеры, визитки, меню, банеры)`
+  'з 08.2018 по нині\n                        (10 місяців)\n                        Bowl Bar Odessa, Одесса (ресторанный бизнес)\n                    ',
+  '-открытие кафе здорового питания\n                    -разработка меню\n                    -разработка стратегии продвижения компании в соц. сетях\n                    -ведение соц.сетей\n                    -привлечение новых клиентов через соц.сети\n                    -налаживание новых каналов сбыта\n                    -работа со СМИ',
 ];
 
 const experiencePrettyData = [{
@@ -55,21 +37,45 @@ const experiencePrettyData = [{
 -привлечение новых клиентов через соц.сети
 -налаживание новых каналов сбыта
 -работа со СМИ`
-}, {
-  position: 'SMM-manager',
-  time: 'з 08.2018 по нині',
-  company: 'Bowl Bar Odessa, Одесса (ресторанный бизнес)',
-  description: `- создание Tone of voice бренда;
-- Pre-production (креатив, идеи, референсы) и post-production (обработка материалов — фотошопы, создание анимаций, витрин, видеоредакторы);
-- контент - план и четкое ему следование;
-- коммуникация с аудиторией – вовлечение, конкурсные механики и другие активации;
-- Influence-маркетинг, работа с лидерами мнений;
-- создание вебсайта на платформе Wordpress;
-- настройка рекламных компаний Facebook Adwords;
-- отслеживание результатов РК;
-- ретаргетинг;
-- создание рекламных материалов ( флаеры, визитки, меню, банеры)`
 }];
+
+
+const educationInputData = ['TITLE:Кну имени Тараса Шевченка', `
+  Институт международных отношений, Киев
+  Вища, з 09.2014 по 05.2018
+  (3 роки 8 місяців)
+`, `Международный бизнес
+Переводчик английского языка`, ''];
+
+const educationOutPutData = [{
+  university: 'Кну имени Тараса Шевченка',
+  department: 'Институт международных отношений, Киев',
+  type: 'Вища',
+  time: 'з 09.2014 по 05.2018',
+  profession: 'Международный бизнес, Переводчик английского языка'
+}];
+
+const commonInputData = ['-интенсив по таргетингу Bazilik \n                        -онлайн курсы по продвижению\n                        -курсы по оптимизации сайта\n                        -интенсив по работе с лидерами мнения',
+  '',
+  'Зберегти у відгуки',
+  'Уже у відгуках',
+  '',
+  ''];
+
+const commonInputDataWithEmptyStrings = ['\n                        Англійська — просунутий\n                        Іспанська — початковий\n                    ',
+  ''];
+
+const commonOutputDataWithEmptyStrings = [
+  'Англійська — просунутий',
+  'Іспанська — початковий'
+];
+
+const commonOutputData = [
+  '-интенсив по таргетингу Bazilik',
+  '-онлайн курсы по продвижению',
+  '-курсы по оптимизации сайта',
+  '-интенсив по работе с лидерами мнения'
+];
 
 
 describe('parser utils functions', () => {
@@ -84,6 +90,23 @@ describe('parser utils functions', () => {
     it('should make readable data structure from array', () => {
       expect(prettifyExperienceSection(experienceInputData))
         .toEqual(experiencePrettyData);
+    });
+  });
+  describe('prettifyEducationSection', () => {
+    it('should make readable data structure from array', () => {
+      expect(prettifyEducationSection(educationInputData))
+        .toEqual(educationOutPutData);
+    });
+  });
+  describe('prettifyCommonSections', () => {
+    it('should make readable data structure from array', () => {
+      expect(prettifyCommon(commonInputData))
+        .toEqual(commonOutputData);
+    });
+
+    it('should remove empty elements', () => {
+      expect(prettifyCommon(commonInputDataWithEmptyStrings))
+        .toEqual(commonOutputDataWithEmptyStrings);
     });
   });
 });

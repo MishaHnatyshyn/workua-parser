@@ -12,7 +12,8 @@ const resumeDataDictionary = new Map(
     ['Освіта', 'education'],
     ['Додаткова інформація', 'additionalInfo'],
     ['Знання мов', 'languages'],
-    ['Додаткова освіта', 'additionalEducation']
+    ['Додаткова освіта', 'additionalEducation'],
+    ['Професійні та інші навички', 'skills']
   ]
 );
 
@@ -29,18 +30,58 @@ const prettifyExperienceSection = experienceSection => experienceSection
       acc.push({
         position: curr.replace('TITLE:', ''),
         time: arr[index + 1].split('\n')[0].trim(),
-        company: arr[index + 2],
-        description: arr[index + 3],
+        company: arr[index + 1].split('\n')[2].trim(),
+        description: arr[index + 2]
+          .split('\n')
+          .map(i => i.replace(/\s+/g, ' ').trim())
+          .join('\n'),
       });
     }
     return acc;
   }, []);
 
-const prettifyResumeData = (resumeData) => {
+const prettifyEducationSection = educationSection => educationSection
+  .reduce((acc, curr, index, arr) => {
+    if (curr.indexOf('TITLE:') >= 0) {
+      acc.push({
+        university: curr.replace('TITLE:', ''),
+        department: arr[index + 1].split('\n').filter(i => i)[0].trim(),
+        type: arr[index + 1].split('\n').filter(i => i)[1].split(',')[0].trim(),
+        time: arr[index + 1].split('\n').filter(i => i)[1].split(',')[1].trim(),
+        profession: arr[index + 2].replace(/\n/g, ', ').replace(/\s+/g, ' ')
+      });
+    }
+    return acc;
+  }, []);
 
+const prettifyCommon = dataSection => dataSection
+  .join(' ')
+  .split('\n')
+  .map(_ => _
+    .replace(/,\s*$/, '')
+    .replace('Зберегти у відгуки', '')
+    .replace('Уже у відгуках', '')
+    .trim())
+  .filter(_ => _.length);
+
+
+const prettify = (title, data) => {
+  if (title === 'experience') return prettifyExperienceSection(data);
+  if (title === 'education') return prettifyEducationSection(data);
+  return prettifyCommon(data);
 };
 
+const prettifyResumeData = resumeData => resumeData.map((section) => {
+  const titleName = resumeDataDictionary.get(section.title);
+  return {
+    [titleName]: prettify(titleName, section.data)
+  };
+});
+
 module.exports = {
+  prettifyEducationSection,
   createPersonalDataTable,
   prettifyExperienceSection,
+  prettifyResumeData,
+  prettifyCommon
 };
