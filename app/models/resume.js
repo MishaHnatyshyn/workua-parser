@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const resumeSchema = mongoose.Schema({
   category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
@@ -10,7 +11,7 @@ const resumeSchema = mongoose.Schema({
     default: { alt: '', url: '' }
   },
   fullName: { type: String, required: true },
-  salary: { type: Number, required: null },
+  salary: { type: Number, default: null },
   position: { type: [String], required: true },
   availability: { type: [String], default: [] },
   personal: {
@@ -56,5 +57,6 @@ const resumeSchema = mongoose.Schema({
   timestamp: { type: Date, default: new Date() }
 });
 
+resumeSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model('Resume', resumeSchema);
