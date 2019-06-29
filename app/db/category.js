@@ -1,3 +1,5 @@
+const { Category } = require('../models')
+
 const addCategory = () => {};
 
 const getCategoryName = () => {};

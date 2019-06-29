@@ -1,3 +1,5 @@
+const { Resume } = require('../models')
+
 const addNewResume = () => {};
 
 const getResumesByCategory = () => {};
