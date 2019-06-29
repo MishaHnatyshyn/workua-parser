@@ -1,5 +1,5 @@
 const jsdom = require('jsdom');
-const request = require('../request-promise');
+const request = require('./request-promise');
 const { createPersonalDataTable, prettifyResumeData } = require('./parserUtils');
 
 const { JSDOM } = jsdom;
