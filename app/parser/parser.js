@@ -6,8 +6,9 @@ const { JSDOM } = jsdom;
 
 const getPage = page => request(`https://www.work.ua/resumes-it/?page=${page}`);
 
-const getDom = html => new JSDOM(html);
+const fetchResumePage = link => request(link);
 
+const getDom = html => new JSDOM(html);
 
 const getPagesCount = (dom) => {
   const pagesCountElement = dom.window.document.querySelector('.pagination>li:nth-last-child(2)>a');
@@ -24,16 +25,6 @@ const getPageResumeLinks = (dom) => {
   return linksArray;
 };
 
-const parse = async () => {
-  const pageData = await getPage(1);
-  const pageDom = getDom(pageData);
-  // const pagesCount = getPagesCount(pageDom);
-  const pagesCount = 1;
-  const pagesPromiseArray = [...new Array(pagesCount)].map((_, i) => getPage(i + 1));
-  await Promise.all(pagesPromiseArray).then(res => console.log(res));
-  console.log(pagesCount);
-};
-
 const parseResumeInfoBlock = (start) => {
   let curr = start.nextElementSibling;
   const result = [];
@@ -45,14 +36,18 @@ const parseResumeInfoBlock = (start) => {
 };
 
 const parseCommonData = (dom) => {
-  const photo = dom.window.document.querySelector('img.border');
+  const photo = dom.window.document.querySelector('img.border') || { src: '', alt: '' };
   const fullName = dom.window.document.querySelector('h1').textContent
     .trim()
     .replace(/\s+/g, ' ');
-  const [salary, ...position] = dom.window.document.querySelector('h2').textContent
+  let [salary, ...position] = dom.window.document.querySelector('h2').textContent
     .split(',')
     .reverse()
     .map(item => item.trim());
+  if (salary.indexOf('грн') === -1) {
+    position.push(salary);
+    salary = '';
+  }
   const availability = dom.window.document.querySelector('h2 + p').textContent;
   const personal = dom.window.document.querySelector('.dl-horizontal').textContent
     .split('\n')
@@ -60,7 +55,7 @@ const parseCommonData = (dom) => {
     .map(item => item.trim());
   return {
     photo: {
-      url: `https://www.work.ua${photo.src}`,
+      url: photo.src ? `https://www.work.ua${photo.src}` : '',
       alt: photo.alt
     },
     fullName,
@@ -91,9 +86,16 @@ const parseResumePage = (dom) => {
   };
 };
 
+const getResume = async (url) => {
+  const html = await fetchResumePage(url);
+  const dom = getDom(html);
+  console.log(url)
+  const resumeData = parseResumePage(dom);
+  return { ...resumeData, link: url };
+};
+
 
 module.exports = {
-  parse,
   getPageResumeLinks,
   getPagesCount,
   getDom,
@@ -101,5 +103,6 @@ module.exports = {
   createPersonalDataTable,
   parseCommonData,
   parseResumeData,
-  parseResumePage
+  parseResumePage,
+  getResume
 };

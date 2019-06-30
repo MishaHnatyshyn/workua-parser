@@ -13,7 +13,8 @@ const resumeDataDictionary = new Map(
     ['Додаткова інформація', 'additionalInfo'],
     ['Знання мов', 'languages'],
     ['Додаткова освіта', 'additionalEducation'],
-    ['Професійні та інші навички', 'skills']
+    ['Професійні та інші навички', 'skills'],
+    ['Рекомендації', 'recommendations']
   ]
 );
 
@@ -78,10 +79,19 @@ const prettifyResumeData = resumeData => resumeData.map((section) => {
   };
 });
 
+const asyncMap = async (array, callback) => {
+  const mappedArray = [];
+  for (let i = 0; i < array.length; i++) {
+    mappedArray[i] = await callback(array[i], i, array);
+  }
+  return mappedArray;
+};
+
 module.exports = {
   prettifyEducationSection,
   createPersonalDataTable,
   prettifyExperienceSection,
   prettifyResumeData,
-  prettifyCommon
+  prettifyCommon,
+  asyncMap
 };

@@ -1,5 +1,4 @@
 const {
-  parse,
   getPageResumeLinks,
   getPagesCount,
   getDom,
@@ -15,6 +14,8 @@ const {
   resumeLinksMock,
   htmlResumePageMock,
   htmlPageMock,
+  resumeWithoutPhotoAndSalaryCommonDataMock,
+  htmlResumeWithoutSalaryAndPhotoPageMock,
 } = require('./mocks/parser.test.data');
 
 
@@ -33,6 +34,12 @@ describe('parser', () => {
     const dom = getDom(htmlResumePageMock);
     expect(parseCommonData(dom)).toEqual(resumeCommonDataMock);
   });
+
+  it('should parse common data without photo and salary', () => {
+    const dom = getDom(htmlResumeWithoutSalaryAndPhotoPageMock);
+    expect(parseCommonData(dom)).toEqual(resumeWithoutPhotoAndSalaryCommonDataMock);
+  });
+
 
   it('should parse resume data', () => {
     const dom = getDom(htmlResumePageMock);

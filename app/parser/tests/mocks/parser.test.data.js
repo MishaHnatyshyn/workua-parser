@@ -2,6 +2,7 @@ const fs = require('fs');
 
 const htmlPageMock = fs.readFileSync('app/parser/tests/mocks/resume-list-first-page.html', 'utf8');
 const htmlResumePageMock = fs.readFileSync('app/parser/tests/mocks/resume-page.html', 'utf8');
+const htmlResumeWithoutSalaryAndPhotoPageMock = fs.readFileSync('app/parser/tests/mocks/resume-page-without-salary-and-photo.html', 'utf8');
 const resumeLinksMock = [
   'https://www.work.ua/resumes/5491825/',
   'https://www.work.ua/resumes/478353/',
@@ -32,6 +33,21 @@ const resumeCommonDataMock = {
     city: 'Одеса',
     relocation: 'Київ'
   },
+};
+
+const resumeWithoutPhotoAndSalaryCommonDataMock = {
+  availability: 'Повна зайнятість.',
+  photo: {
+    url: '',
+    alt: ''
+  },
+  fullName: 'Ткаченко Виталий Олегович',
+  salary: '',
+  position: ['Разнорабочий'],
+  personal: {
+    age: '18 років',
+    city: 'Кривий Ріг'
+  }
 };
 
 const resumeDataMock = [
@@ -203,10 +219,12 @@ const resumePageDataMock = {
 
 
 module.exports = {
+  htmlResumeWithoutSalaryAndPhotoPageMock,
   resumePageDataMock,
   resumeDataMock,
   resumeCommonDataMock,
   resumeLinksMock,
   htmlResumePageMock,
   htmlPageMock,
-}
+  resumeWithoutPhotoAndSalaryCommonDataMock,
+};
