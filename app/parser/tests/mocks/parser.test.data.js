@@ -20,6 +20,7 @@ const resumeLinksMock = [
   'https://www.work.ua/resumes/3924184/',
 ];
 const resumeCommonDataMock = {
+  meta: 'Дубченко Анна Юрьевна, SMM-менеджер, PR-manager шукає роботу у Києві, Одесі. Про себе: 22 роки, вища освіта, досвід роботи 3 роки. Цікавить повна зайнятість, неповна зайнятість, дистанційна робота, ЗП від 20000 грн.',
   photo: {
     alt: '',
     url: 'https://www.work.ua//i.work.ua/sent_photo/3/0/5/3053e5fadf6cb14442aeb06743b07985.jpg'
@@ -36,6 +37,7 @@ const resumeCommonDataMock = {
 };
 
 const resumeWithoutPhotoAndSalaryCommonDataMock = {
+  meta: 'Ткаченко Виталий Олегович, Разнорабочий шукає роботу у Кривому Розі. Про себе: 18 років, середня спеціальна освіта. Цікавить повна зайнятість.',
   availability: 'Повна зайнятість.',
   photo: {
     url: '',
@@ -134,6 +136,7 @@ const resumeDataMock = [
 ];
 
 const resumePageDataMock = {
+  meta: 'Дубченко Анна Юрьевна, SMM-менеджер, PR-manager шукає роботу у Києві, Одесі. Про себе: 22 роки, вища освіта, досвід роботи 3 роки. Цікавить повна зайнятість, неповна зайнятість, дистанційна робота, ЗП від 20000 грн.',
   photo: {
     alt: '',
     url: 'https://www.work.ua//i.work.ua/sent_photo/3/0/5/3053e5fadf6cb14442aeb06743b07985.jpg'

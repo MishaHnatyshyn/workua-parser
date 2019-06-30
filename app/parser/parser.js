@@ -36,6 +36,7 @@ const parseResumeInfoBlock = (start) => {
 };
 
 const parseCommonData = (dom) => {
+  const meta = dom.window.document.querySelector('meta[name="Description"]').content.replace(/&nbsp;/g, '');
   const photo = dom.window.document.querySelector('img.border') || { src: '', alt: '' };
   const fullName = dom.window.document.querySelector('h1').textContent
     .trim()
@@ -54,6 +55,7 @@ const parseCommonData = (dom) => {
     .filter(item => item.trim())
     .map(item => item.trim());
   return {
+    meta,
     photo: {
       url: photo.src ? `https://www.work.ua${photo.src}` : '',
       alt: photo.alt
