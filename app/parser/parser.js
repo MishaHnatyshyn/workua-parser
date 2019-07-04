@@ -41,6 +41,7 @@ const parseCommonData = (dom) => {
   const fullName = dom.window.document.querySelector('h1').textContent
     .trim()
     .replace(/\s+/g, ' ');
+  // eslint-disable-next-line prefer-const
   let [salary, ...position] = dom.window.document.querySelector('h2').textContent
     .split(',')
     .reverse()
@@ -91,7 +92,7 @@ const parseResumePage = (dom) => {
 const getResume = async (url) => {
   const html = await fetchResumePage(url);
   const dom = getDom(html);
-  console.log(url)
+  console.log(url);
   const resumeData = parseResumePage(dom);
   return { ...resumeData, link: url };
 };

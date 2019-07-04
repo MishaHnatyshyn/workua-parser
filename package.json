@@ -5,7 +5,9 @@
   "main": "app/index.js",
   "scripts": {
     "test": "jest --env=node",
-    "server": "node ./app/index.js"
+    "server": "node ./app/index.js",
+    "lint": "eslint app/",
+    "start": "node ./app/index.js"
   },
   "repository": {
     "type": "git",

@@ -81,7 +81,8 @@ const prettifyResumeData = resumeData => resumeData.map((section) => {
 
 const asyncMap = async (array, callback) => {
   const mappedArray = [];
-  for (let i = 0; i < array.length; i++) {
+  for (let i = 0; i < array.length; i += 1) {
+    // eslint-disable-next-line no-await-in-loop
     mappedArray[i] = await callback(array[i], i, array);
   }
   return mappedArray;

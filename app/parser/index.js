@@ -2,7 +2,7 @@ const {
   getDom, getPage, getPageResumeLinks, getResume
 } = require('./parser');
 const { asyncMap } = require('./parserUtils');
-const db = require('../db');
+// const db = require('../db');
 
 const parse = async () => {
   const pageData = await getPage(1);

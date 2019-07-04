@@ -35,9 +35,9 @@ const experiencePrettyData = [{
 
 
 const educationInputData = ['TITLE:Кну имени Тараса Шевченка', `
-  Институт международных отношений, Киев
-  Вища, з 09.2014 по 05.2018
-  (3 роки 8 місяців)
+Институт международных отношений, Киев
+Вища, з 09.2014 по 05.2018
+(3 роки 8 місяців)
 `, `Международный бизнес
 Переводчик английского языка`, ''];
 
@@ -82,4 +82,4 @@ module.exports = {
   experienceInputData,
   personalDataTableFormattedResultMock,
   personalDataTableArrayMock,
-}
+};
