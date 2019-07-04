@@ -30,7 +30,7 @@ const parse = async () => {
       validResumes,
       async resume => db.resume.addNewResume({ ...resume, category: categories[0]._id })
     );
-    if (validResumes.length !== resumes.length) break;
+    // if (validResumes.length !== resumes.length) break;
     currentPageNumber += 1;
   }
 };
