@@ -2,7 +2,9 @@ const express = require('express');
 const compression = require('compression');
 const bodyParser = require('body-parser');
 const db = require('./db');
+const { CronJob } = require('cron');
 const router = require('./router');
+const parse = require('./parser');
 require('dotenv').config({ path: './config/.env' });
 
 const app = express();
@@ -22,4 +24,7 @@ db.connect({
 
 app.listen(process.env.PORT, () => {
   console.log('App started on port: ', process.env.PORT);
+  new CronJob('30 23 * * *', (() => {
+    parse();
+  }));
 });

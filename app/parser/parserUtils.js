@@ -87,11 +87,19 @@ const asyncMap = async (array, callback) => {
   return mappedArray;
 };
 
+const asyncForEach = async (array, callback) => {
+  for (let i = 0; i < array.length; i++) {
+    const status = await callback(array[i], i, array);
+    if (status === 'break') break;
+  }
+};
+
 module.exports = {
   prettifyEducationSection,
   createPersonalDataTable,
   prettifyExperienceSection,
   prettifyResumeData,
   prettifyCommon,
-  asyncMap
+  asyncMap,
+  asyncForEach
 };

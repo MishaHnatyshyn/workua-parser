@@ -19,9 +19,18 @@ const getSingleResume = id => new Promise(((resolve, reject) => {
   });
 }));
 
+const checkExistence = link => new Promise(((resolve, reject) => {
+  Resume.findOne({ link }, { _id: 1 }).exec((err, resume) => {
+    if (err) return reject(err);
+    if (resume) return resolve(true);
+    resolve(false);
+  });
+}));
+
 module.exports = {
   addNewResume,
   getResumesByCategory,
   getFilteredResumes,
   getSingleResume,
+  checkExistence,
 };
