@@ -13,7 +13,7 @@ const resumeSchema = mongoose.Schema({
     default: { alt: '', url: '' }
   },
   fullName: { type: String, required: true },
-  salary: { type: Number, default: null },
+  salary: { type: String, default: '' },
   position: { type: [String], required: true },
   availability: { type: [String], default: [] },
   personal: {
@@ -29,27 +29,12 @@ const resumeSchema = mongoose.Schema({
     }
   },
   experience: {
-    type: [
-      {
-        company: String,
-        description: String,
-        position: String,
-        time: String
-      }
-    ],
+    type: Array,
     default: []
   },
   education:
     {
-      type: [
-        {
-          department: String,
-          profession: String,
-          time: String,
-          type: String,
-          university: String
-        }
-      ],
+      type: Array,
       default: []
     },
   additionalEducation: { type: [String], default: [] },
