@@ -11,13 +11,16 @@ const parseResume = async (link) => {
 };
 
 const parse = async () => {
+  console.log('PARSING')
   const categories = await db.category.getAllCategories();
+  console.log(categories)
   const targetCategory = categories[0].name;
   const firstPageData = await getPage(targetCategory, 1);
   const firstPageDom = getDom(firstPageData);
   const pagesCount = getPagesCount(firstPageDom);
   let currentPageNumber = 1;
   while (currentPageNumber < pagesCount) {
+    console.log('Processing page', currentPageNumber)
     const currentPage = await getPage(targetCategory, currentPageNumber);
     const currentPageDom = getDom(currentPage);
     const resumeLinks = getPageResumeLinks(currentPageDom);
