@@ -1,0 +1,12 @@
+language: node_js
+cache: npm
+install:
+  - npm install
+script:
+  - npm lint
+  - npm test
+deploy:
+  provider: heroku
+  api_key:
+    secure: "eF03a/3V5y7zyw6Dc57SeCz/bURcmbY0S9Cx6mWh0Lzo7+1YoiCldRvOQFWomtZc7S9o+TOgANfvwfglsD7u65MoTuFjaBWW8wZN67HxcCpb7vgm9ixfsdR/1Tm6lZZ/OUzbH7hHCqyjnr/gMbAWpXVc32HQA1fYgcL1TCXNWIHccHZd/87w/nsDUKhPec7TmAuRiLggbTgRlDUCuRd2gvMFYs2OxKtPJRwiAY+HmJEyg2XbWptLvVGXqaBeE+UkH/VOBoORTplaPLmJT2vI5bE3+SuIjtMnIyOuJfEF1LsH/UYw1veAYoG5s9DPNJn0PNb/xWn7yDWXn/eP0nonJa/WTQyb70wwZ5t8wkDRQX/93bGn5eLubBVn9xdIFt9sO59cZIO1+QtNWIav4ZhpnGa4axzOaTyKvvVwQkJCrtS/Y5f3HbBhTzXbe3wzowpjWDI2YoKtXofgjy6OxwsXzw9mBZ6Yl3ncIEjgc2/yZfXY/F3wWJJ/Acg1hxWn+VgMIEfG3ecrBUvhJEoTXr/a9V8+MwQnwosMb8iCVfdKgx/XhxlG/voFE/ovnoZq0Lv8EElK2d+qeN5oqNz3h0bOmkTx/uF0+/sQMHhtdaSICY19pU65AH9zchRafXndLsRFC6+gk5eCQDKcVVYMHRipFjgI83hZsKpyocbGBk2azbE="
+
