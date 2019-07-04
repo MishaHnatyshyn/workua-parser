@@ -5,7 +5,7 @@ cache: npm
 install:
   - npm install
 script:
-  - npm lint
+  - npm run lint
   - npm test
 deploy:
   provider: heroku
