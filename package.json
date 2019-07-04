@@ -5,7 +5,9 @@
   "main": "app/index.js",
   "scripts": {
     "test": "jest --env=node",
-    "server": "node ./app/index.js"
+    "server": "node ./app/index.js",
+    "start": "node ./app/index.js",
+    "lint": "eslint --fix app/"
   },
   "repository": {
     "type": "git",
@@ -35,6 +37,7 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
+    "cron": "^1.7.1",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "jsdom": "^15.1.1",

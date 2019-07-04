@@ -4,7 +4,13 @@ const { createPersonalDataTable, prettifyResumeData } = require('./parserUtils')
 
 const { JSDOM } = jsdom;
 
-const getPage = page => request(`https://www.work.ua/resumes-it/?page=${page}`);
+const getPage = (category, page) => request(`https://www.work.ua/resumes-${category}/?page=${page}`);
+
+const wait = ms => new Promise((resolve) => {
+  setTimeout(() => {
+    resolve();
+  }, ms);
+})
 
 const fetchResumePage = link => request(link);
 
@@ -89,9 +95,9 @@ const parseResumePage = (dom) => {
 };
 
 const getResume = async (url) => {
+  await wait(1000);
   const html = await fetchResumePage(url);
   const dom = getDom(html);
-  console.log(url)
   const resumeData = parseResumePage(dom);
   return { ...resumeData, link: url };
 };
@@ -106,5 +112,6 @@ module.exports = {
   parseCommonData,
   parseResumeData,
   parseResumePage,
+  wait,
   getResume
 };

@@ -1,15 +1,32 @@
 const {
-  getDom, getPage, getPageResumeLinks, getResume
+  getDom, getPage, getPageResumeLinks, getResume, getPagesCount
 } = require('./parser');
-const { asyncMap } = require('./parserUtils');
+const { asyncMap, asyncForEach } = require('./parserUtils');
 const db = require('../db');
 
-const parse = async () => {
-  const pageData = await getPage(1);
-  const pageDom = getDom(pageData);
-  const resumeLinks = getPageResumeLinks(pageDom);
-  const resumes = await asyncMap(resumeLinks.slice(0, 3), async link => getResume(link));
-  console.log(JSON.stringify(resumes, null, 2));
+const parseResume = async (link) => {
+  const alreadyExists = await db.resume.checkExistence(link);
+  if (alreadyExists) return null;
+  return getResume(link);
 };
 
-parse();
+const parse = async () => {
+  const categories = await db.category.getAllCategories();
+  const targetCategory = categories[0].name;
+  const firstPageData = await getPage(targetCategory, 1);
+  const firstPageDom = getDom(firstPageData);
+  const pagesCount = getPagesCount(firstPageDom);
+  let currentPageNumber = 1;
+  while (currentPageNumber < pagesCount) {
+    const currentPage = await getPage(targetCategory, currentPageNumber);
+    const currentPageDom = getDom(currentPage);
+    const resumeLinks = getPageResumeLinks(currentPageDom);
+    const resumes = await asyncMap(resumeLinks, async link => parseResume(link));
+    const validResumes = resumes.filter(item => !!item);
+    await asyncForEach(validResumes, async resume => db.resume.addNewResume(resume));
+    if (validResumes.length !== resumes.length) break;
+    currentPageNumber += 1;
+  }
+};
+
+module.exports = parse;
