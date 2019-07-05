@@ -24,7 +24,10 @@ db.connect({
 
 app.listen(process.env.PORT, () => {
   console.log('App started on port: ', process.env.PORT);
-  new CronJob('30 23 * * *', (() => {
+/*  const parsing = new CronJob('35 23 * * *', (() => {
+    console.log('\n\n\n\n\PARSING STARTED\n\n\n\n\n\n\n');
     parse();
   }));
+  parsing.start();*/
+  parse();
 });

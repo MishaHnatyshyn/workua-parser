@@ -1,6 +1,13 @@
 const { Resume } = require('../models');
 
-const addNewResume = () => {};
+const addNewResume = data => new Promise(((resolve, reject) => {
+  const newResume = new Resume(data);
+  newResume.save((err) => {
+    if (err) return reject(err);
+    console.log('new resume');
+    resolve(newResume);
+  });
+}));
 
 const getResumesByCategory = () => {};
 
