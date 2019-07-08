@@ -38,8 +38,12 @@ const prettifyExperienceSection = experienceSection => experienceSection
         description: arr[index + 2]
           .split('\n')
           .map(i => i.replace(/\s+/g, ' ')
+            .replace(URL_REGEXP, '')
             .trim()
-            .replace(/^TITLE:.+/g, ''))
+            .replace(/\[відкрити контакти\]/g, '')
+            .replace(/\(див. вище в блоці «контактна інформація»\)/g, '')
+            .replace(/^TITLE:.+/g, '')
+            .trim())
           .join('\n'),
       });
     }
@@ -67,8 +71,8 @@ const prettifyCommon = dataSection => dataSection
     .replace(/,\s*$/, '')
     .replace('Зберегти у відгуки', '')
     .replace('Уже у відгуках', '')
-    .replace('[відкрити контакти]', '')
-    .replace('(див. вище в блоці «контактна інформація»)', '')
+    .replace(/\[відкрити контакти\]/g, '')
+    .replace(/\(див. вище в блоці «контактна інформація»\)/g, '')
     .replace(URL_REGEXP, '')
     .replace(/\\u[0-9]{4}/g, '')
     .trim())
