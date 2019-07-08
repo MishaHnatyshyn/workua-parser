@@ -10,7 +10,7 @@ const wait = ms => new Promise((resolve) => {
   setTimeout(() => {
     resolve();
   }, ms);
-})
+});
 
 const fetchResumePage = link => request(link);
 
@@ -54,6 +54,8 @@ const parseCommonData = (dom) => {
   if (salary.indexOf('грн') === -1) {
     position.push(salary);
     salary = '';
+  } else {
+    salary = `${parseInt(salary.replace(/\s/g, ''), 10) / 25 * 1.5}`;
   }
   const availability = dom.window.document.querySelector('h2 + p').textContent;
   const personal = dom.window.document.querySelector('.dl-horizontal').textContent
@@ -66,7 +68,7 @@ const parseCommonData = (dom) => {
       url: photo.src ? `https://www.work.ua${photo.src}` : '',
       alt: photo.alt
     },
-    fullName,
+    fullName: fullName !== 'Особисті дані приховані' ? fullName : 'Hidden',
     salary,
     position,
     availability,

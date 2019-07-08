@@ -18,6 +18,9 @@ const resumeDataDictionary = new Map(
   ]
 );
 
+const URL_REGEXP = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/ig;
+
+
 const createPersonalDataTable = array => array.reduce((acc, curr, index, arr) => {
   if (personalDataDictionary.has(curr)) {
     acc[personalDataDictionary.get(curr)] = arr[index + 1];
@@ -34,7 +37,9 @@ const prettifyExperienceSection = experienceSection => experienceSection
         company: arr[index + 1].split('\n')[2].trim(),
         description: arr[index + 2]
           .split('\n')
-          .map(i => i.replace(/\s+/g, ' ').trim())
+          .map(i => i.replace(/\s+/g, ' ')
+            .trim()
+            .replace(/^TITLE:.+/g, ''))
           .join('\n'),
       });
     }
@@ -49,7 +54,7 @@ const prettifyEducationSection = educationSection => educationSection
         department: arr[index + 1].split('\n').filter(i => i)[0].trim(),
         type: arr[index + 1].split('\n').filter(i => i)[1].split(',')[0].trim(),
         time: arr[index + 1].split('\n').filter(i => i)[1].split(',')[1].trim(),
-        profession: arr[index + 2].replace(/\n/g, ', ').replace(/\s+/g, ' ')
+        profession: arr[index + 2].replace(/\n/g, ', ').replace(/\s+/g, ' ').replace(/^TITLE:.+/g, '')
       });
     }
     return acc;
@@ -62,6 +67,10 @@ const prettifyCommon = dataSection => dataSection
     .replace(/,\s*$/, '')
     .replace('Зберегти у відгуки', '')
     .replace('Уже у відгуках', '')
+    .replace('[відкрити контакти]', '')
+    .replace('(див. вище в блоці «контактна інформація»)', '')
+    .replace(URL_REGEXP, '')
+    .replace(/\\u[0-9]{4}/g, '')
     .trim())
   .filter(_ => _.length);
 

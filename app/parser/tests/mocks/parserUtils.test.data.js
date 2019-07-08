@@ -53,7 +53,7 @@ const commonInputData = ['-интенсив по таргетингу Bazilik \n
   '',
   'Зберегти у відгуки',
   'Уже у відгуках',
-  '',
+  'https://www.work.ua/resumes/5454163/',
   ''];
 
 const commonInputDataWithEmptyStrings = ['\n                        Англійська — просунутий\n                        Іспанська — початковий\n                    ',

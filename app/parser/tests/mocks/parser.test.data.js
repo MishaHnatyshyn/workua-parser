@@ -26,7 +26,7 @@ const resumeCommonDataMock = {
     url: 'https://www.work.ua//i.work.ua/sent_photo/3/0/5/3053e5fadf6cb14442aeb06743b07985.jpg'
   },
   fullName: 'Дубченко Анна Юрьевна',
-  salary: '20 000 грн',
+  salary: '1200',
   position: ['PR-manager', 'SMM-менеджер'],
   availability: 'Повна зайнятість, неповна зайнятість, дистанційна робота.',
   personal: {
@@ -142,7 +142,7 @@ const resumePageDataMock = {
     url: 'https://www.work.ua//i.work.ua/sent_photo/3/0/5/3053e5fadf6cb14442aeb06743b07985.jpg'
   },
   fullName: 'Дубченко Анна Юрьевна',
-  salary: '20 000 грн',
+  salary: '1200',
   position: ['PR-manager', 'SMM-менеджер'],
   availability: 'Повна зайнятість, неповна зайнятість, дистанційна робота.',
   personal: {
