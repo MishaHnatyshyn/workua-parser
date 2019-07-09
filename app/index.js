@@ -1,8 +1,8 @@
 const express = require('express');
 const compression = require('compression');
 const bodyParser = require('body-parser');
+const cron = require('node-cron');
 const db = require('./db');
-// const { CronJob } = require('cron');
 const router = require('./router');
 const parse = require('./parser');
 require('dotenv').config({ path: `${__dirname}/config/.env` });
@@ -25,5 +25,10 @@ db.connect({
 app.listen(process.env.PORT, (err) => {
   if (!process.env.PORT || err) return console.log(err);
   console.log('App started on port: ', process.env.PORT);
-  parse();
+  cron.schedule('0 3 * * *', () => {
+    parse();
+  }, {
+    scheduled: true,
+    timezone: 'Europe/Kiev'
+  });
 });
